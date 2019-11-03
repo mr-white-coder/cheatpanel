@@ -1,0 +1,10 @@
+{% extends 'panel/base.html' %}
+
+{% block content %}
+    {% for post in posts %}
+    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a><br>
+        {{ post.text|truncatewords:100 }}
+
+        <hr>
+    {% endfor %}
+{% endblock %}

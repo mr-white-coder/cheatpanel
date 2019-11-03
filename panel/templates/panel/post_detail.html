@@ -1,0 +1,11 @@
+{% extends 'panel/base.html' %}
+
+{% block content %}
+
+    {{ post.title }}
+
+    {{ post.text }}
+    
+    <br>
+    <a href=" {% url 'panel:news' %}">back</a>
+{% endblock %}

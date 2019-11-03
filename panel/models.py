@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from datetime import timedelta, datetime, timezone
 # Create your models here.
 
@@ -11,7 +12,7 @@ class Client(models.Model):
         return self.email
 
 
-class Product(models.Model):
+class Game(models.Model):
     name = models.CharField(max_length=200)
 
     def __str__(self):
@@ -22,7 +23,7 @@ class LicenseKey(models.Model):
     created_date = models.DateTimeField('created date')
     expire_date = models.DateTimeField('expire date')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, blank=True, null=True)
 
     def time_left(self):     
         today = datetime.now(timezone.utc) 
@@ -36,13 +37,18 @@ class LicenseKey(models.Model):
         self.expire_date = self.expire_date + timedelta(days=amount)
     
     def __str__(self):
-        return '{} - {}'.format(self.product, self.client)
+        return '{} - {}'.format(self.game, self.client)
 
 
-class NewsPost(models.Model):
+class Post(models.Model):
     title = models.CharField(max_length=300)
-    post_text = models.TextField()
+    text = models.TextField()
     pub_date = models.DateTimeField()
+    slug = models.SlugField(max_length=250, unique_for_date='pub_date')
 
     def __str__(self):
             return self.title
+
+    def get_absolute_url(self):
+        return reverse('panel:post_detail', args=[self.pub_date.year, self.pub_date.month,
+                                                    self.pub_date.day, self.slug])
