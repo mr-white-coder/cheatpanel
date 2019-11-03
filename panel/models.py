@@ -10,11 +10,13 @@ class Client(models.Model):
     def __str__(self):
         return self.email
 
+
 class Product(models.Model):
     name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
+
 
 class LicenseKey(models.Model):
     created_date = models.DateTimeField('created date')
@@ -36,3 +38,11 @@ class LicenseKey(models.Model):
     def __str__(self):
         return '{} - {}'.format(self.product, self.client)
 
+
+class NewsPost(models.Model):
+    title = models.CharField(max_length=300)
+    post_text = models.TextField()
+    pub_date = models.DateTimeField()
+
+    def __str__(self):
+            return self.title

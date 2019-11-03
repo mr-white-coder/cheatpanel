@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Client, LicenseKey, Product
+from .models import Client, LicenseKey, Product, NewsPost
 
 admin.site.site_header = 'Cheats administration'
 
@@ -29,3 +29,4 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(LicenseKey, LicenseKeyAdmin)
 admin.site.register(Client, ClientAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(NewsPost)
